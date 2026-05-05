@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Van Dyckx — Intelligent Indie Pop/Rock</title>
+  <meta name="description" content="The Van Dyckx — Intelligent indie pop/rock with an ounce of wit. Exercises in poetry. Music that doesn't self-impose the generally known industry boundaries and standards.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,300;0,400;0,700;1,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #f01b6e;
+      --yellow: #f5e642;
+      --black: #0a0a0a;
+      --dark-slate: #1a1a2a;
+      --text: #f0ede8;
+      --text-dim: #b0a898;
+      --off-white: #f0ede8;
+      --zap: #ff3a8c;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px; line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(10,10,10,0.92);
+      border-bottom: 2px solid var(--pink);
+    }
+    .nav-logo {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.5rem; letter-spacing: 0.1em;
+      color: var(--text); text-decoration: none;
+    }
+    .nav-logo span { color: var(--pink); }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      font-family: 'Courier Prime', monospace; font-size: 0.75rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-dim); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--yellow); }
+    .nav-socials { display: flex; gap: 1.2rem; }
+    .nav-socials a {
+      color: var(--text-dim); text-decoration: none; font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+    .nav-socials a:hover { color: var(--pink); }
+
+    /* HERO */
+    #home {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+      background: var(--yellow);
+    }
+    .hero-art-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.zoogletools.com/s:bzglfiles/u/476585/2c33e849250d5a46fdd7030742ee282f9d2f8f48/original/freaksville-artist.jpg/!!/b%3AW1sicmVzaXplIiwxODAwXSxbIm1heCJdLFsid2UiXV0%3D/meta%3AeyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ%3D%3D.jpg') center/cover no-repeat;
+      mix-blend-mode: multiply;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 3rem 3rem 5rem;
+      width: 100%;
+    }
+    .hero-tagline {
+      font-family: 'Courier Prime', monospace; font-size: 0.75rem;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--black); background: var(--pink);
+      display: inline-block; padding: 0.3rem 0.8rem;
+      margin-bottom: 1rem;
+      opacity: 0; animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s forwards;
+    }
+    .hero-title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(4rem, 12vw, 10rem);
+      line-height: 0.9; letter-spacing: 0.02em;
+      color: var(--black);
+      text-shadow: 6px 6px 0 var(--pink);
+      opacity: 0; animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
+    }
+    .hero-subtitle {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem;
+      font-style: italic; color: var(--black);
+      margin-top: 1.5rem; max-width: 500px;
+      opacity: 0; animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+    .hero-nav {
+      display: flex; gap: 1.5rem; margin-top: 2.5rem; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.8s ease 1s forwards;
+    }
+    .hero-nav a {
+      font-family: 'Courier Prime', monospace; font-size: 0.7rem;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--black); text-decoration: none;
+      border-bottom: 2px solid var(--black);
+      padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;
+    }
+    .hero-nav a:hover { color: var(--pink); border-color: var(--pink); }
+
+    /* ZAP DECORATION */
+    .zap-bg {
+      position: absolute; top: 0; right: 0;
+      width: 50%; height: 100%;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent, transparent 30px,
+        rgba(240,27,110,0.06) 30px, rgba(240,27,110,0.06) 32px
+      );
+      pointer-events: none;
+    }
+
+    /* SECTIONS */
+    section { padding: 6rem 0; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 3rem; }
+    .section-label {
+      font-family: 'Courier Prime', monospace; font-size: 0.65rem;
+      letter-spacing: 0.4em; text-transform: uppercase;
+      color: var(--pink); margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      letter-spacing: 0.03em; color: var(--text);
+      margin-bottom: 3rem; line-height: 1;
+    }
+
+    /* MUSIC */
+    #music { background: var(--dark-slate); }
+    .music-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    }
+    .release-card {
+      background: var(--black); border: 1px solid #2a2a3a;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .release-card:hover {
+      border-color: var(--pink); transform: translateY(-3px);
+    }
+    .release-card-img {
+      width: 100%; aspect-ratio: 1; object-fit: cover; display: block;
+      filter: saturate(1.1);
+    }
+    .release-card-body { padding: 1.2rem 1.5rem; }
+    .release-card-title {
+      font-family: 'Anton', sans-serif; font-size: 1.4rem;
+      letter-spacing: 0.04em; color: var(--text); margin-bottom: 0.3rem;
+    }
+    .release-card-artist {
+      font-family: 'Courier Prime', monospace; font-size: 0.65rem;
+      letter-spacing: 0.15em; color: var(--text-dim); text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .release-card-desc {
+      font-size: 0.9rem; color: var(--text-dim); line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+    .btn-buy {
+      display: inline-block;
+      background: var(--pink); color: var(--black);
+      font-family: 'Courier Prime', monospace; font-size: 0.65rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 0.6rem 1.2rem; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-buy:hover { background: var(--yellow); }
+    .btn-buy.outline {
+      background: transparent; border: 1px solid var(--pink); color: var(--pink);
+    }
+    .btn-buy.outline:hover { background: var(--pink); color: var(--black); }
+
+    /* TRACKLIST */
+    .tracklist { margin-top: 1rem; }
+    .track-row {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0.6rem 0; border-bottom: 1px solid #2a2a3a;
+      font-size: 0.9rem;
+    }
+    .track-num {
+      font-family: 'Courier Prime', monospace; font-size: 0.65rem;
+      color: var(--pink); width: 1.5rem; flex-shrink: 0;
+    }
+    .track-name { flex: 1; color: var(--text-dim); }
+    .track-price {
+      font-family: 'Courier Prime', monospace; font-size: 0.65rem;
+      color: var(--text-dim);
+    }
+
+    /* VIDEOS */
+    #videos { background: var(--black); }
+    .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+    .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+    .video-label {
+      margin-top: 0.75rem;
+      font-family: 'Courier Prime', monospace; font-size: 0.65rem;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim);
+    }
+
+    /* ABOUT */
+    #about { background: var(--dark-slate); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: start;
+    }
+    .about-photo {
+      position: relative;
+    }
+    .about-photo img {
+      width: 100%; display: block;
+    }
+    .about-photo::before {
+      content: ''; position: absolute; inset: -6px;
+      border: 3px solid var(--pink); z-index: -1;
+    }
+    .about-text { }
+    .about-text p {
+      color: var(--text-dim); margin-bottom: 1.2rem;
+      font-size: 1rem; line-height: 1.8;
+    }
+    .about-cta {
+      margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;
+    }
+
+    /* CONTACT */
+    #contact { background: var(--black); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label {
+      display: block; margin-bottom: 0.4rem;
+      font-family: 'Courier Prime', monospace; font-size: 0.65rem;
+      letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim);
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: var(--dark-slate); border: 1px solid #2a2a3a;
+      color: var(--text); font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem; padding: 0.75rem 1rem;
+      outline: none; transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--pink); }
+    .form-group textarea { min-height: 140px; resize: vertical; }
+    .btn-submit {
+      background: var(--pink); border: none;
+      color: var(--black); font-family: 'Courier Prime', monospace;
+      font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
+      padding: 0.9rem 2.5rem; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-submit:hover { background: var(--yellow); }
+    .contact-aside { }
+    .contact-aside h3 {
+      font-family: 'Anton', sans-serif; font-size: 2rem;
+      letter-spacing: 0.05em; color: var(--text); margin-bottom: 1rem;
+    }
+    .contact-aside p {
+      color: var(--text-dim); font-size: 0.95rem; margin-bottom: 1rem;
+    }
+    .socials-list { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+    .socials-list a {
+      font-family: 'Courier Prime', monospace; font-size: 0.65rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-dim); text-decoration: none; border: 1px solid #2a2a3a;
+      padding: 0.4rem 0.9rem; transition: all 0.2s;
+    }
+    .socials-list a:hover { border-color: var(--pink); color: var(--pink); }
+
+    /* FOOTER */
+    footer {
+      background: var(--black); border-top: 2px solid var(--pink);
+      padding: 2rem 3rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer p {
+      font-family: 'Courier Prime', monospace; font-size: 0.6rem;
+      letter-spacing: 0.12em; color: #444;
+    }
+    footer a { color: #444; text-decoration: none; }
+    footer a:hover { color: var(--pink); }
+
+    /* ANIMATIONS */
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.85) translateY(16px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 1; transform: translateY(0); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.hidden { opacity: 0; transform: translateY(24px); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .container { padding: 0 1.5rem; }
+      .music-grid, .video-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      section { padding: 4rem 0; }
+      .hero-title { font-size: clamp(3rem, 15vw, 6rem); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#home" class="nav-logo">THE VAN <span>DYCKX</span></a>
+    <div class="nav-links">
+      <a href="#music">Music</a>
+      <a href="#videos">Videos</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-socials">
+      <a href="http://twitter.com" target="_blank" rel="noopener">tw</a>
+      <a href="http://facebook.com" target="_blank" rel="noopener">fb</a>
+      <a href="http://youtube.com" target="_blank" rel="noopener">yt</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-art-bg"></div>
+    <div class="zap-bg"></div>
+    <div class="hero-content">
+      <p class="hero-tagline">Intelligent indie pop/rock</p>
+      <h1 class="hero-title">THE<br>VAN<br>DYCKX</h1>
+      <p class="hero-subtitle">Exercises in poetry. Music that doesn't self-impose the generally known industry boundaries and standards.</p>
+      <nav class="hero-nav">
+        <a href="#music">Music</a>
+        <a href="#videos">Videos</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- MUSIC -->
+  <section id="music">
+    <div class="container">
+      <p class="section-label reveal">Releases</p>
+      <h2 class="section-title reveal">Music</h2>
+      <div class="music-grid">
+
+        <!-- Baby -->
+        <div class="release-card reveal">
+          <img class="release-card-img" src="https://images.zoogletools.com/s:bzglfiles/u/476585/cbfb163329a22bf04f9fd00f72d4633a4248585e/original/baby-cover-low-res.jpg/!!/b%3AW1sicmVzaXplIixbMjAwLDIwMF1dLFsiY3JvcCJdXQ%3D%3D/meta%3AeyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ%3D%3D.jpg" alt="Baby single artwork">
+          <div class="release-card-body">
+            <p class="release-card-title">Baby</p>
+            <p class="release-card-artist">The Van Dyckx feat. Kool Koor</p>
+            <p class="release-card-desc">You've had enough of 2020? Viruses and all that? Millionaire con-men that run for office? Your life has become a bad version of a reality show? Then this song is for YOU!</p>
+            <div class="tracklist">
+              <div class="track-row"><span class="track-num">1</span><span class="track-name">Baby</span><span class="track-price">€0.99</span></div>
+            </div>
+            <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+              <a href="https://bdobbelstein.bandzoogle.com/track/4260631/baby" class="btn-buy" target="_blank" rel="noopener">Download €0.99</a>
+              <a href="#" class="btn-buy outline">Share</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nasse Maus EP -->
+        <div class="release-card reveal">
+          <img class="release-card-img" src="https://images.zoogletools.com/s:bzglfiles/u/476585/c41b8005add47cb9857f92aadc45e5395dad0575/original/freaksville-artist-3500-px-suggestion-cadrage.jpg/!!/b%3AW1sicmVzaXplIixbMjAwLDIwMF1dLFsiY3JvcCJdXQ%3D%3D/meta%3AeyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ%3D%3D.jpg" alt="Nasse Maus EP artwork">
+          <div class="release-card-body">
+            <p class="release-card-title">Nasse Maus EP</p>
+            <p class="release-card-artist">The Van Dyckx</p>
+            <div class="tracklist">
+              <div class="track-row"><span class="track-num">1</span><span class="track-name">Deine Nasse Maus</span><span class="track-price">€0.99</span></div>
+              <div class="track-row"><span class="track-num">2</span><span class="track-name">Unwohl</span><span class="track-price">€0.99</span></div>
+              <div class="track-row"><span class="track-num">3</span><span class="track-name">Deine Nasse Maus (Radio Edit)</span><span class="track-price">€0.99</span></div>
+              <div class="track-row"><span class="track-num">4</span><span class="track-name">Deine nasse Maus (Extended Mix)</span><span class="track-price">€0.99</span></div>
+            </div>
+            <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+              <a href="#" class="btn-buy">Download €2.50</a>
+              <a href="#" class="btn-buy outline">Share</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- We Are History -->
+        <div class="release-card reveal">
+          <img class="release-card-img" src="https://images.zoogletools.com/s:bzglfiles/u/476585/9c278a80cf05f2556646727330af536279c1fb61/original/webformat72dpi.jpg/!!/b%3AW1sicmVzaXplIixbMjAwLDIwMF1dLFsiY3JvcCJdXQ%3D%3D/meta%3AeyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ%3D%3D.jpg" alt="We Are History artwork">
+          <div class="release-card-body">
+            <p class="release-card-title">We Are History</p>
+            <p class="release-card-artist">The Van Dyckx</p>
+            <div class="tracklist">
+              <div class="track-row"><span class="track-num">1</span><span class="track-name">We Are History</span><span class="track-price">€0.99</span></div>
+            </div>
+            <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+              <a href="#" class="btn-buy">Download €0.99</a>
+              <a href="https://music.apple.com/be/artist/the-van-dyckx/1451240398" class="btn-buy outline" target="_blank" rel="noopener">Apple Music</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEOS -->
+  <section id="videos">
+    <div class="container">
+      <p class="section-label reveal">Watch</p>
+      <h2 class="section-title reveal">Videos</h2>
+      <div class="video-grid reveal">
+        <div>
+          <div class="video-wrap">
+            <iframe src="https://www.youtube.com/embed/FNp1VtPRCpA" title="The Van Dyckx — Video 1" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <p class="video-label">Latest Video</p>
+        </div>
+        <div>
+          <div class="video-wrap">
+            <iframe src="https://www.youtube.com/embed/1ahr0Vv_-gc" title="The Van Dyckx — Video 2" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <p class="video-label">Music Video</p>
+        </div>
+      </div>
+      <p style="margin-top: 2rem; font-family: 'Courier Prime', monospace; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--text-dim);" class="reveal">
+        → <a href="http://youtube.com" target="_blank" rel="noopener" style="color: var(--pink); text-decoration: none;">Watch more on YouTube</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <p class="section-label reveal">About</p>
+      <div class="about-grid">
+        <div class="about-photo reveal">
+          <img src="https://images.zoogletools.com/s:bzglfiles/u/476585/c4362d64fccb535fb47f4c3326c0fd655c013940/original/dolby-086.jpg/!!/b%3AW1siZXh0cmFjdCIseyJsZWZ0IjowLCJ0b3AiOjAsIndpZHRoIjozNzQ0LCJoZWlnaHQiOjM3NDR9XSxbInJlc2l6ZSIsMTAwMF0sWyJtYXgiXSxbIndlIl1d/meta%3AeyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ%3D%3D.jpg" alt="The Van Dyckx">
+        </div>
+        <div class="about-text reveal">
+          <h2 class="section-title" style="margin-bottom: 1.5rem; color: var(--yellow);">The Van Dyckx</h2>
+          <p>Please welcome The Van Dyckx. Intelligent indie pop/rock with an ounce of wit. Exercises in poetry. Music that doesn't self-impose the generally known industry boundaries and standards. Songs that tell stories. Songs about love. About anger. Or the girl from next door. Everything that surrounds us and makes us think and tick. Well, The Van Dyckx at least.</p>
+          <p>Discover the world through the eyes of The Van Dyckx. If you feel like it, do a little silly dance to one of their songs. If you don't, you might want to smash some public property.</p>
+          <p>Or not. It's up to you. Just don't take it all too seriously.</p>
+          <p style="font-family: 'Courier Prime', monospace; font-size: 0.9rem; color: var(--pink); font-style: italic;">I know we don't.</p>
+          <div class="about-cta">
+            <a href="https://music.apple.com/be/artist/the-van-dyckx/1451240398" class="btn-buy" target="_blank" rel="noopener">Apple Music</a>
+            <a href="#music" class="btn-buy outline">All Releases</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <p class="section-label reveal">Get In Touch</p>
+      <h2 class="section-title reveal">Contact</h2>
+      <div class="contact-grid">
+        <div class="reveal">
+          <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Send</button>
+          </form>
+        </div>
+        <div class="contact-aside reveal">
+          <h3>Say Hello</h3>
+          <p>Booking, press, licensing, or just to say you love the music — we're all ears.</p>
+          <p style="margin-top: 1rem; font-family: 'Courier Prime', monospace; font-size: 0.65rem; letter-spacing: 0.15em; color: var(--text-dim);">
+            Join our mailing list for the latest news:
+          </p>
+          <div class="socials-list">
+            <a href="http://twitter.com" target="_blank" rel="noopener">Twitter</a>
+            <a href="http://facebook.com" target="_blank" rel="noopener">Facebook</a>
+            <a href="http://youtube.com" target="_blank" rel="noopener">YouTube</a>
+            <a href="https://music.apple.com/be/artist/the-van-dyckx/1451240398" target="_blank" rel="noopener">Apple Music</a>
+          </div>
+          <p style="margin-top: 2.5rem; font-family: 'Courier Prime', monospace; font-size: 0.65rem; letter-spacing: 0.15em; color: #444;">
+            → <a href="https://bdobbelstein.com" target="_blank" rel="noopener" style="color: #555; text-decoration: none;">bdobbelstein.com</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© <span id="yr"></span> The Van Dyckx — All Rights Reserved</p>
+    <p><a href="https://bdobbelstein.com" target="_blank" rel="noopener">bdobbelstein.com</a></p>
+  </footer>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    reveals.forEach(el => el.classList.add('hidden'));
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.remove('hidden');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => obs.observe(el));
+  </script>
+
+</body>
+</html>
